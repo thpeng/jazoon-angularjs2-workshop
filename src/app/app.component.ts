@@ -7,6 +7,11 @@ import {RouteConfig, Router} from 'angular2/router';
 import {Home} from './home';
 import {AppState} from './app.service';
 import {RouterActive} from './router-active';
+import {Person} from './spass';
+import {Users} from './users/users.component';
+import {Wikipedia} from './wikipedia/wikipedia.component';
+import {Contact} from './contact/contact.component';
+
 
 /*
  * App Component
@@ -39,6 +44,7 @@ import {RouterActive} from './router-active';
     <header>
       <nav>
         <h1>Hello {{ name }}</h1>
+        <h1>Hello {{ person.fullname }} </h1>
         <ul>
           <li router-active>
             <a [routerLink]=" ['Index'] ">Index</a>
@@ -47,7 +53,16 @@ import {RouterActive} from './router-active';
             <a [routerLink]=" ['Home'] ">Home</a>
           </li>
           <li router-active>
+            <a [routerLink]=" ['Users'] ">Users</a>
+          </li>
+          <li router-active>
             <a [routerLink]=" ['About'] ">About</a>
+          </li>
+          <li router-active>
+            <a [routerLink]=" ['Wikipedia'] ">Wikipedia</a>
+          </li>
+          <li router-active>
+            <a [routerLink]=" ['Contact'] ">Contact</a>
           </li>
         </ul>
       </nav>
@@ -70,15 +85,21 @@ import {RouterActive} from './router-active';
 @RouteConfig([
   { path: '/',      name: 'Index', component: Home, useAsDefault: true },
   { path: '/home',  name: 'Home',  component: Home },
+  { path: '/users', name: 'Users', component: Users},
+  { path: '/wikipedia', name: 'Wikipedia', component: Wikipedia},
+  { path: '/contact', name: 'Contact', component: Contact},
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
 ])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   name = 'Angular 2 Webpack Starter';
+  person = new Person('blubb');
   url = 'https://twitter.com/AngularClass';
 
-  constructor(public appState: AppState) {}
+  constructor(public appState: AppState) {
+
+  }
 
   ngOnInit() {
     console.log('Initial App State', this.appState.state);

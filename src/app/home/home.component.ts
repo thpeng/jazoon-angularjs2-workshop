@@ -3,6 +3,7 @@ import {AppState} from '../app.service';
 
 import {Title} from './title';
 import {XLarge} from './x-large';
+import {UsersService} from '../services/userService';
 
 @Component({
   // The selector is what angular internally uses
@@ -11,7 +12,7 @@ import {XLarge} from './x-large';
   selector: 'home',  // <home></home>
   // We need to tell Angular's Dependency Injection which providers are in our app.
   providers: [
-    Title
+    Title, UsersService
   ],
   // We need to tell Angular's compiler which directives are in our template.
   // Doing so will allow Angular to attach our behavior to an element
@@ -28,9 +29,12 @@ import {XLarge} from './x-large';
 export class Home {
   // Set our default values
   localState = { value: '' };
+  date: Date;
+  users : any;
   // TypeScript public modifiers
-  constructor(public appState: AppState, public title: Title) {
-
+  constructor(public appState: AppState, public title: Title, users: UsersService) {
+    setInterval(() => this.date = new Date(), 1000);
+    this.users = users.get();
   }
 
   ngOnInit() {
